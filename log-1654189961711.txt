@@ -1,0 +1,38 @@
+Jun 03, 2022 12:12:43 AM log.Log info
+INFO: Starting task Truncating data
+Jun 03, 2022 12:12:44 AM log.Log info
+INFO: Ending task Truncating data
+Jun 03, 2022 12:12:44 AM log.Log info
+INFO: Task Truncating data took 0.147s
+Jun 03, 2022 12:12:44 AM log.Log info
+INFO: Starting task Initializing input(Getting file length and setting up readers)
+Jun 03, 2022 12:12:44 AM log.Log info
+INFO: Ending task Initializing input(Getting file length and setting up readers)
+Jun 03, 2022 12:12:44 AM log.Log info
+INFO: Task Initializing input(Getting file length and setting up readers) took 0.001s
+Jun 03, 2022 12:12:44 AM log.Log startLogger
+INFO: Starting
+Jun 03, 2022 12:12:47 AM log.Log info
+INFO: Size of input:1000
+Jun 03, 2022 12:12:52 AM log.Log info
+INFO: Both task 1 + 2
+Jun 03, 2022 12:12:52 AM log.Log info
+INFO: Starting task Reading input file
+Jun 03, 2022 12:13:47 AM log.Log info
+INFO: Ending task Reading input file
+Jun 03, 2022 12:13:47 AM log.Log info
+INFO: Task Reading input file took 54.579s
+Jun 03, 2022 12:13:47 AM log.Log info
+INFO: Starting task Printing task 1
+Jun 03, 2022 12:13:52 AM log.Log info
+INFO: Ending task Printing task 1
+Jun 03, 2022 12:13:52 AM log.Log info
+INFO: Task Printing task 1 took 5.509s
+Jun 03, 2022 12:13:52 AM log.Log info
+INFO: Starting task Printing to file task2
+Jun 03, 2022 12:13:58 AM log.Log info
+INFO: Ending task Printing to file task2
+Jun 03, 2022 12:13:58 AM log.Log info
+INFO: Task Printing to file task2 took 5.482s
+Jun 03, 2022 12:13:58 AM log.Log endLogger
+INFO: Stopping

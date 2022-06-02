@@ -2,9 +2,8 @@ package datastax.core;
 import java.net.InetSocketAddress;
 
 import com.datastax.oss.driver.api.core.CqlSession;
-import com.datastax.oss.driver.api.core.cql.*;
-
-import input.Input;
+import com.datastax.oss.driver.api.core.cql.ResultSet;
+import com.datastax.oss.driver.api.core.cql.Row;
 
 
 public class Core {
@@ -23,37 +22,35 @@ public class Core {
 		}
 	}
 	
-	public String getData() {
-		ResultSet resultSet = session.execute("select * from devices;");
-		StringBuilder result= new StringBuilder();
-		for (Row row : resultSet) {
-			result.append(row.getString("data"));
-			result.append("\n");
-		}
-		return result.toString();
+	public ResultSet getData(int warrantyYear) {
+		ResultSet resultSet = session.execute(String.format("SELECT * FROM devices WHERE warrantyyear = %d;", warrantyYear));
+//		StringBuilder result= new StringBuilder();
+//		for (Row row : resultSet) {
+//			result.append(row.getString("data"));
+//			result.append("\n");
+//		}
+		return resultSet;
 	}
 	
 	public void insertDevice(String data, int warranyYear) {
-		session.execute(String.format("insert into devices (data, warrantyyear) values "
+		session.execute(String.format("INSERT INTO devices (data, warrantyyear) VALUES "
 				+ "(\'%s\' , %d) ;", data, warranyYear));
 	}
 	
 	public void clearAllDevices() {
-		session.execute("truncate devices;");
+		session.execute("Truncate devices;");
 	}
 	
 	public void endSession() {
 		session.close();
 	}
 	
-	public static void main(String[] args) {
-		Core core = new Core("34.143.164.127", "datacenter1");
-		core.clearAllDevices();
-		Input input = new Input("Input/input1.txt", 1, core);
-		input.readAll();
-		
-		System.out.print(core.getData());
-		core.endSession();
+	public static String getNextData(ResultSet resultSet) {
+		Row row = resultSet.one();
+		if (row == null) {
+			return null;
+		}
+		return row.getString("data");
 	}
 	
 }
