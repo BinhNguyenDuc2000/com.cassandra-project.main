@@ -30,9 +30,14 @@ public class Input {
 	 */
 	public static final long NUMBER_OF_CHARS_PER_THREAD = 10000000l;
 	/**
-	 * The size of a char
+	 * The size of a char.
 	 */
 	private static final int SIZE_OF_CHAR = 1;
+	
+	/**
+	 * The number of producer threads that handle sending data to server.
+	 */
+	private static final int NUMBER_OF_INPUT_PRODUCER_THREAD = 100;
 	
 	/**
 	 * Initializing the Readers list.
@@ -86,13 +91,11 @@ public class Input {
 	public void readAll() {
 		try {
 			// Setting up consumers
-			ArrayList<BlockingQueue<String>> dataQueueList = new ArrayList<>();
-//			BufferedWriter writerList[] = new BufferedWriter[range];
+			BlockingQueue<String> dataQueue = new ArrayBlockingQueue<String>(100000);
+
 			ExecutorService consumerExecutorService = Executors.newFixedThreadPool(range);
-			for (int i = 0; i < range; i++) {
-				dataQueueList.add(new ArrayBlockingQueue<String>(100000));
-//				writerList[i] = new BufferedWriter(new FileWriter("MiddleOutput/MiddleOutput" + i + ".txt"), 8192 * 10);
-				consumerExecutorService.execute(new InputConsumer(dataQueueList.get(i), core));
+			for (int i = 0; i < NUMBER_OF_INPUT_PRODUCER_THREAD; i++) {
+				consumerExecutorService.execute(new InputConsumer(dataQueue, core));
 			}
 			consumerExecutorService.shutdown();
 
@@ -100,17 +103,13 @@ public class Input {
 			ExecutorService producerExecutorService = Executors.newFixedThreadPool(4);
 
 			for (int i = 0; i < readerList.size(); i++) {
-				producerExecutorService.execute(new InputProducer(dataQueueList, readerList.get(i)));
+				producerExecutorService.execute(new InputProducer(dataQueue, readerList.get(i)));
 			}
 			producerExecutorService.shutdown();
 			while (!producerExecutorService.awaitTermination(Long.MAX_VALUE, TimeUnit.MINUTES));
 
-			for (int index = 0; index < dataQueueList.size(); index++) {
-				dataQueueList.get(index).put("end");
-			}
-
-			while (!consumerExecutorService.awaitTermination(Long.MAX_VALUE, TimeUnit.MINUTES))
-				;
+			while (!consumerExecutorService.awaitTermination(Long.MAX_VALUE, TimeUnit.MINUTES));
+			dataQueue.clear();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(0);

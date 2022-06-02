@@ -2,7 +2,6 @@ package input.producer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 
 import input.Input;
@@ -13,10 +12,10 @@ import input.Input;
  *
  */
 public class InputProducer implements Runnable {
-    private ArrayList<BlockingQueue<String>> dataQueueList;    
+    private BlockingQueue<String> dataQueue;    
     private BufferedReader reader;
-    public InputProducer(ArrayList<BlockingQueue<String>> dataQueueList, BufferedReader reader) {
-        this.dataQueueList = dataQueueList;
+    public InputProducer(BlockingQueue<String> dataQueue, BufferedReader reader) {
+        this.dataQueue = dataQueue;
         this.reader = reader;
     }
 
@@ -43,10 +42,11 @@ public class InputProducer implements Runnable {
 //						index += (message.charAt(strLen-2) - 48) * 10;
 //					}
 					readChars += message.length() + 2;
-					dataQueueList.get(0).put(message);
+					dataQueue.put(message);
 				}
 				
 				else {
+					dataQueue.put("end");
 					break;
 				}
 				

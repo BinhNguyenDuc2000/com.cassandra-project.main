@@ -40,6 +40,7 @@ public class InputConsumer implements Runnable {
 					core.insertDevice(message, index);
 				}
 				else {
+					dataQueue.put("end");
 					break;
 				}
 			}
