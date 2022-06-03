@@ -1,7 +1,10 @@
 package faker;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -114,10 +117,21 @@ public class FakeInputData {
 
 	public static void main(String[] args) {
 		FakeInputData faker = new FakeInputData("Input/input1.txt");
-		for (int i=0; i<1000; i++)
-			faker.appendLine();
-		faker.close();
-		System.out.print("Done");
+		System.out.print("Number of devices: ");
+		BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));		
+        try {
+        	String s = bufferRead.readLine();
+			
+			for (int i=0; i<Integer.parseInt(s); i++)
+				faker.appendLine();
+			faker.close();
+			
+			System.out.print("Finished Faking Input file\n");
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
+		
 	}
 
 }

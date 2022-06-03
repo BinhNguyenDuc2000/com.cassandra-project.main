@@ -24,5 +24,32 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/java-driver-core-4.14.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/config-1.4.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/esri-geometry-api-1.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/gremlin-core-3.5.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/HdrHistogram-2.1.12.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/jackson-core-2.13.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/jackson-databind-2.13.2.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/java-driver-shaded-guava-25.1-jre-graal-sub-1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/jcip-annotations-1.0-1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/jnr-posix-3.1.15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/lz4-java-1.7.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/metrics-core-4.1.18.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/native-protocol-1.5.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/netty-handler-4.1.75.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/reactive-streams-1.0.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/slf4j-api-1.7.26.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/snappy-java-1.1.7.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/spotbugs-annotations-3.1.12.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/tinkergraph-gremlin-3.5.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/netty-dependency/bcpkix-jdk15on-1.69.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/netty-dependency/conscrypt-openjdk-uber-2.5.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/netty-dependency/netty-buffer-4.1.75.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/netty-dependency/netty-codec-4.1.75.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/netty-dependency/netty-common-4.1.75.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/netty-dependency/netty-resolver-4.1.75.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/netty-dependency/netty-tcnative-classes-2.0.50.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/netty-dependency/netty-transport-4.1.75.Final.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

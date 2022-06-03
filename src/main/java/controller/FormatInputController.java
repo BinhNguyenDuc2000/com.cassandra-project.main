@@ -1,11 +1,11 @@
 package controller;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.Timestamp;
-
-import javax.swing.JOptionPane;
 
 import datastax.core.Core;
 import input.Input;
@@ -61,9 +61,18 @@ public class FormatInputController {
 	 */
 	public void start() {
 		log.startLogger();
-		log.info("Size of input:" + JOptionPane.showInputDialog("Input size:"));
-		String message = JOptionPane.showInputDialog("Log notes:");
-		log.info(message);
+		BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));	
+		try {
+			log.info("Please enter the number of devices:");
+			String s = bufferRead.readLine();
+			log.info("Size of input:" + s);
+			log.info("Please enter note:");
+			s = bufferRead.readLine();
+			log.info("Log note:" + s);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 	}
 	
 	/**

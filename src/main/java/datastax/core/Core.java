@@ -15,6 +15,9 @@ public class Core {
 					withLocalDatacenter(dataCenter).
 					withKeyspace("binhnguyen").
 					build();
+			ResultSet rs = session.execute("select release_version from system.local");              // (2)
+			Row row = rs.one();
+			System.out.println(row.getString("release_version"));
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -24,11 +27,6 @@ public class Core {
 	
 	public ResultSet getData(int warrantyYear) {
 		ResultSet resultSet = session.execute(String.format("SELECT * FROM devices WHERE warrantyyear = %d;", warrantyYear));
-//		StringBuilder result= new StringBuilder();
-//		for (Row row : resultSet) {
-//			result.append(row.getString("data"));
-//			result.append("\n");
-//		}
 		return resultSet;
 	}
 	

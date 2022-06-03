@@ -1,0 +1,2 @@
+Jun 03, 2022 1:53:48 PM log.Log info
+INFO: Starting task Truncating data
