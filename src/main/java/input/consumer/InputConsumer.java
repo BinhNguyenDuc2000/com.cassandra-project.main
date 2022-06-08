@@ -12,10 +12,13 @@ import datastax.core.Core;
 public class InputConsumer implements Runnable {
 	private BlockingQueue<String> dataQueue;
 	private Core core;
+	private int warrantyYear;
+	private static final int BATCH_SIZE = 100;
 
-	public InputConsumer(BlockingQueue<String> dataQueue, Core core) {
+	public InputConsumer(BlockingQueue<String> dataQueue, Core core, int warrantyYear) {
 		this.dataQueue = dataQueue;
 		this.core = core;
+		this.warrantyYear = warrantyYear;
 	}
 
 	@Override
@@ -28,19 +31,24 @@ public class InputConsumer implements Runnable {
 	 */
 	private void consume() {
 		try {
+			String[] dataArray = new String[BATCH_SIZE];
+			int length = 0;
 			while (true) {
-				String message;
-				message = dataQueue.take();
+				String message = dataQueue.take();
 				if (message.compareTo("end") != 0) {
-					int strLen = message.length();
-					int index = message.charAt(strLen-1) - 48;
-					if (message.charAt(strLen-2)!=',') {
-						index += (message.charAt(strLen-2) - 48) * 10;
+					dataArray[length] = message;
+					length++;
+					if (length==BATCH_SIZE) {
+						core.insertDevice(dataArray, warrantyYear, length);
+						length = 0;
 					}
-					core.insertDevice(message, index);
+					
 				}
 				else {
-					dataQueue.put("end");
+					if (length > 0) {
+						core.insertDevice(dataArray, warrantyYear, length);
+						length = 0;
+					}
 					break;
 				}
 			}

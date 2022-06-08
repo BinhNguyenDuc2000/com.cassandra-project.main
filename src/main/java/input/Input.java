@@ -35,11 +35,6 @@ public class Input {
 	private static final int SIZE_OF_CHAR = 1;
 	
 	/**
-	 * The number of producer threads that handle sending data to server.
-	 */
-	private static final int NUMBER_OF_INPUT_PRODUCER_THREAD = 100;
-	
-	/**
 	 * Initializing the Readers list.
 	 * @param filename the input file name.
 	 * @param range the range of warranty year.
@@ -91,11 +86,13 @@ public class Input {
 	public void readAll() {
 		try {
 			// Setting up consumers
-			BlockingQueue<String> dataQueue = new ArrayBlockingQueue<String>(100000);
+			ArrayList<BlockingQueue<String>> dataQueueList = new ArrayList<BlockingQueue<String>>(100000);
 
 			ExecutorService consumerExecutorService = Executors.newFixedThreadPool(range);
-			for (int i = 0; i < NUMBER_OF_INPUT_PRODUCER_THREAD; i++) {
-				consumerExecutorService.execute(new InputConsumer(dataQueue, core));
+			for (int i = 0; i < range; i++) {
+				BlockingQueue<String> blockingQueue = new ArrayBlockingQueue<String>(100000);
+				dataQueueList.add(blockingQueue);
+				consumerExecutorService.execute(new InputConsumer(blockingQueue, core, i));
 			}
 			consumerExecutorService.shutdown();
 
@@ -103,13 +100,15 @@ public class Input {
 			ExecutorService producerExecutorService = Executors.newFixedThreadPool(4);
 
 			for (int i = 0; i < readerList.size(); i++) {
-				producerExecutorService.execute(new InputProducer(dataQueue, readerList.get(i)));
+				producerExecutorService.execute(new InputProducer(dataQueueList, readerList.get(i)));
 			}
 			producerExecutorService.shutdown();
 			while (!producerExecutorService.awaitTermination(Long.MAX_VALUE, TimeUnit.MINUTES));
+			for (int index = 0; index < dataQueueList.size(); index++) {
+				dataQueueList.get(index).put("end");
+			}
 
 			while (!consumerExecutorService.awaitTermination(Long.MAX_VALUE, TimeUnit.MINUTES));
-			dataQueue.clear();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(0);
