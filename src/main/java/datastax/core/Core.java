@@ -1,13 +1,14 @@
 package datastax.core;
 import java.net.InetSocketAddress;
 import java.time.Duration;
+import java.util.concurrent.CompletionStage;
 
 import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.core.config.DefaultDriverOption;
 import com.datastax.oss.driver.api.core.config.DriverConfigLoader;
+import com.datastax.oss.driver.api.core.cql.AsyncResultSet;
 import com.datastax.oss.driver.api.core.cql.ResultSet;
 import com.datastax.oss.driver.api.core.cql.Row;
-
 
 public class Core {
 	private CqlSession session;
@@ -16,17 +17,13 @@ public class Core {
 			DriverConfigLoader loader =
 				    DriverConfigLoader.programmaticBuilder()
 				    	.withDuration(DefaultDriverOption.REQUEST_TIMEOUT, Duration.ofSeconds(30))
-//				        .startProfile("binhnguyen")
-//				        .withDuration(DefaultDriverOption.REQUEST_TIMEOUT, Duration.ofSeconds(30))
-//				        .endProfile()
 				        .build();
 			
 			session = CqlSession.builder().
 					addContactPoint(new InetSocketAddress(socketAddress, 9042)).
 					withLocalDatacenter(dataCenter).
 					withKeyspace("binhnguyen").
-					withConfigLoader(loader).
-					build();
+					withConfigLoader(loader).build();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -35,11 +32,11 @@ public class Core {
 	}
 	
 	public ResultSet getData(int warrantyYear) {
-		ResultSet resultSet = session.execute(String.format("SELECT * FROM devices WHERE warrantyyear = %d;", warrantyYear));
+		ResultSet resultSet = session.execute(String.format("SELECT * FROM devices WHERE warrantyyear = %d ;", warrantyYear));
 		return resultSet;
 	}
 	
-	public void insertDevice(String[] dataArray, int warranyYear, int length) {
+	public CompletionStage<AsyncResultSet> insertDevice(String[] dataArray, int warranyYear, int length) {
 		StringBuilder query = new StringBuilder("BEGIN BATCH \n");
 		for (int i=0; i < length; i++) {
 			query.append(String.format("INSERT INTO devices (data, warrantyyear) VALUES "
@@ -47,7 +44,8 @@ public class Core {
 		}
 		query.append("APPLY BATCH;");
 		
-		session.execute(query.toString());
+		return session.executeAsync(query.toString());
+		
 	}
 	
 	public void clearAllDevices() {
@@ -65,5 +63,25 @@ public class Core {
 		}
 		return row.getString("data");
 	}
+	
+	public String getVersion() {
+		
+		// Chain one async operation after another:
+		CompletionStage<String> responseStage = session.
+				executeAsync("SELECT release_version FROM system.local").
+				thenApply(resultSet -> resultSet.one().getString("release_version"));
+		
+		return responseStage.toCompletableFuture().join();
+	}
+	
+	public static void main(String[] args) {
+		Core core = new Core("34.143.164.127", "datacenter1");
+		System.out.printf("Version1: %s", core.getVersion() );
+		System.out.printf("Version2: %s", core.getVersion() );
+		core.endSession();
+
+	}
+
+
 	
 }
