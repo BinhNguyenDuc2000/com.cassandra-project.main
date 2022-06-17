@@ -42,7 +42,7 @@ public class InputProducer implements Runnable {
 					if (message.charAt(strLen-2)!=',') {
 						index += (message.charAt(strLen-2) - 48) * 10;
 					}
-					readChars += message.length() + 2;
+					readChars += message.length() + 1;
 					dataQueueList.get(index).put(message);
 				}
 				
