@@ -5,6 +5,7 @@ import java.util.concurrent.BlockingQueue;
 import com.datastax.oss.driver.api.core.cql.ResultSet;
 
 import datastax.core.Core;
+import decompressor.Decompressor;
 
 /**
  * Producer will read records from Middle Output files and add it to the Blocking Queue.
@@ -35,8 +36,10 @@ public class Output1Producer implements Runnable {
 					ResultSet resultSet = core.getData(i);
 					while (running) {
 						String message = Core.getNextData(resultSet);
+						
 						if (message != null) {
-							dataQueue.put(message);
+							
+							dataQueue.put(Decompressor.decompress(message));
 						} else {
 							running = false;
 						}

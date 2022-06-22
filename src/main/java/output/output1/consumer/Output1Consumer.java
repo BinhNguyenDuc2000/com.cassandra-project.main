@@ -28,7 +28,7 @@ public class Output1Consumer implements Runnable {
 			while (running) {
 				message = dataQueue.take();
 				if (message.compareTo("end") != 0) {
-					writer.write(message + "\n");
+					writer.write(message);
 				} else {
 					running = false;
 				}

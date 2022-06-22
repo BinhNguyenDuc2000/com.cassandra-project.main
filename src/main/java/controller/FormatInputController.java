@@ -139,7 +139,7 @@ public class FormatInputController {
 
 	public static void main(String[] args) {
 		try {
-			Core core = new Core("34.143.164.127", "datacenter1");
+			Core core = new Core("10.148.0.12", "datacenter1");
 			FormatInputController controller = new FormatInputController("Input/input1.txt", "Output/output1.txt", 100, core);
 			controller.start();
 			controller.task1();

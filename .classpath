@@ -51,5 +51,6 @@
 	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/netty-dependency/netty-resolver-4.1.75.Final.jar"/>
 	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/netty-dependency/netty-tcnative-classes-2.0.50.Final.jar"/>
 	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/netty-dependency/netty-transport-4.1.75.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/svocs01/git/com.cassandra-project.main/commons-codec-1.15.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

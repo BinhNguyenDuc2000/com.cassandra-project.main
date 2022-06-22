@@ -40,10 +40,11 @@ public class Core {
 	}
 	
 	public void insertDevice(String[] dataArray, int warranyYear, int length) {
+		
 		StringBuilder query = new StringBuilder("BEGIN BATCH \n");
 		for (int i=0; i < length; i++) {
 			query.append(String.format("INSERT INTO devices (data, warrantyyear) VALUES "
-					+ "(\'%s\' , %d) ; \n", dataArray[i], warranyYear));
+					+ "(\'%s\' , %d) ; \n",  dataArray[i], warranyYear));
 		}
 		query.append("APPLY BATCH;");
 		
